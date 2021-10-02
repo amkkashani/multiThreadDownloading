@@ -8,7 +8,7 @@ import (
 )
 
 var wg sync.WaitGroup
-var URL = "http://localhost/rand.txt"
+var URL = "https://gameup.ir/video/MokhtarFinalTrailer-720p.webm"
 var numberOfRoutings int = 10
 
 
@@ -32,13 +32,13 @@ func main() {
 		go func(min int, max int, i int) {
 			client := &http.Client {}
 			req, _ := http.NewRequest("GET", "http://localhost/rand.txt", nil)
-			range_header := "bytes=" + strconv.Itoa(min) +"-" + strconv.Itoa(max-1) // Add the data for the Range header of the form "bytes=0-100"
+			range_header := "bytes=" + strconv.Itoa(min) +"-" + strconv.Itoa(max-1) 
 			req.Header.Add("Range", range_header)
 			resp,_ := client.Do(req)
 			defer resp.Body.Close()
 			reader, _ := ioutil.ReadAll(resp.Body)
 			body[i] = string(reader)
-			ioutil.WriteFile(strconv.Itoa(i), []byte(string(body[i])), 0x777) // Write to the file i as a byte array
+			ioutil.WriteFile(strconv.Itoa(i), []byte(string(body[i])), 0x777)
 			wg.Done()
 			//          ioutil.WriteFile("new_oct.png", []byte(string(body)), 0x777)
 		}(min, max, i)
